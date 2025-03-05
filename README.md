@@ -21,7 +21,7 @@ The objective of this project was to simulate an attack on a virtual machine and
 
 ### Step 1.- Designing a Diagram
 
-To start things created a Diagram to show the desired workflow of this project. This time we used a tool called <a href="https://app.diagrams.net/">Draw.io</a> to design the diagram.
+To start things, we created a Diagram to show the desired workflow of this project. This time we used a tool called <a href="https://app.diagrams.net/">Draw.io</a> to design the diagram.
 
 The first thing we had to do was to describe what we wanted out of this project.
 	Create a Playbook/Story using Tines.
