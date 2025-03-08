@@ -333,11 +333,12 @@ Image #22
 
 The rule was successful in detecting the event.
 
+To try it out, we can head to the _**Detections**_ tab and execute the file once more in our Windows Server machine.
 
+![image](https://github.com/user-attachments/assets/3dd40bf9-f2ed-4c9e-9cf5-e2588352e875)
+Image #23
 
-
-
-
+As we can see in the feed we of alerts there is our newly created Detection & Response Rule working fine.
 
 
 
