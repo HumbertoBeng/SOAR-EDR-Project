@@ -340,18 +340,159 @@ Image #23
 
 As we can see in the feed we of alerts there is our newly created Detection & Response Rule working fine.
 
+### Step 5.- Setup Slack
+
+First things first we need to create an account with Slack.
+
+Once you have created an account with Slack go ahead and click the "Create a workspace" button. Next write a name for your Organization, then write the name you would like to be recognized with. We won't be adding more people to this company since is not necessary at the moment so we can skip that option. And finally give a description to your Organization, it can be anythinng.
+
+Now we are going to create a new channel where all the alerts are going to be sent. To do that we can click the _Add channels_ button and then select _Create a new channel_ and finally selecting _Blank channel_. 
+
+![image](https://github.com/user-attachments/assets/1bb61608-6d69-4d99-9336-e61c4fb5cb44)
+Image #25
+
+To show that this channel will be the one receiving the alerts from Tines, let's name give it the name of "alerts" and setting it up its visibility to Public, and at the end just click create.
+
+![image](https://github.com/user-attachments/assets/379157e8-04e3-4d28-bc00-81e471dec1f3)
+Image #26
+
+The channel now created should be at the top of the list of "Channels".
 
 
 
+### Step 6.- Setup Tines
+
+Same as before we are going to create an account to use with Tines.
+
+Once we've created our account we should end up with a screen like this.
+
+![image](https://github.com/user-attachments/assets/9426d476-e547-4f16-ac87-7d01ca70b9cf)
+Image #27
+
+So what we need to do is set a connection between LimaCharlie and Tines. To do that we can go ahead an take the "Webhook" tool on the left side panel and drag it to the center. Once done that we need to change its name to "Retrieve Detections" and give it a description, to do that just simply click on the Webhook icon we just grabbed and a panel on the right side should show with the information to do so. Finally copy the Webhook URL because we are going to use it for the next step.
+
+![image](https://github.com/user-attachments/assets/d6516281-68fe-4421-86a7-f8740c8b91f8)
+Image #28
+
+Now we are going to go to LimaCharlie. Once inside our Organization, we need to go to the _Outputs_ TAB and then select "Add Output".
+
+![image](https://github.com/user-attachments/assets/18aab6c8-d827-49b4-9ed3-406912c50a6c)
+Image #29
+
+After that there will be displayed different Outputs related to our Organization. What we are going to be using this time is going to be the "Detections" output, so click the "Select" button next to it.
+Next we need to choose the destination to where the Detections are going to be sent to. So scrolling down a bit there should be an option for "Tines" which is the tool we are using.
+
+![image](https://github.com/user-attachments/assets/835a92b6-6714-412c-815c-0e89e2d40a9f)
+Image #30
+
+![image](https://github.com/user-attachments/assets/6990847f-83c3-4378-aea0-98370278ae82)
+Image #31
+
+We are going to give this Output a name and a Destination Host and finally click on "Save Output". The Destination host is the link we copied earlier from the Webhook URL in Tines. refer to Image #28.
+
+![image](https://github.com/user-attachments/assets/fd72c05a-1068-4edc-9f18-16da3391dea1)
+Image #32
+
+After creating the new Output it may say that it "Couldn't detect any recent samples moving trhough this output", which means that is not detecting anything at the moment. To fix that we can just go to our Windows Server machine and run LaZagne again to generate the event and for our rule to Detect it. Once done that we can click on the "Refresh Samples" button until we see our detection on screen.
+
+![image](https://github.com/user-attachments/assets/698d4a03-dd12-4adc-bf78-6626d70ff867)
+Image #33
+
+To verify if the connection was successful we can head over to Tines and look for the Webhook Action we just added, then click on the Webhook and a couple of actions should be displayed under the Webhook, between the new actions there should be a "Events" section and that is where we can see if the connection was successful.
+
+![image](https://github.com/user-attachments/assets/a8ffff83-e8b9-46a4-b722-1630f422abaa)
+Image #34
+
+After we click the "Events" action a small window should appear at the bottom of the screen. Here is where the detections that come from LimaCharlie appear. Looking through them we can see that our Detection is here as well.
+
+![image](https://github.com/user-attachments/assets/8e1c6866-112e-470a-bd42-7be42ef963de)
+Image #35
+
+Inside this event we can find the same tags that we can find in the _Timeline_ TAB back in LimaCharlie. Things like the "COMMAND_LINE", "FILE_PATH" and "HASH" tags can also be found here.
+
+![image](https://github.com/user-attachments/assets/7829121a-c9a5-4ca4-a5d1-b4253dd08690)
+Image #36
 
 
+### Step 8.- Creating a Playbook in Tines
 
+To create our Playbook we're going to take a look to the Diagram. The first thing we did was create a Sensor in LimaCharlie to detect the use of a hacktool within it. So the next thing to do is to create a connection between Tines and Slack so that Tines can notify Slack if an event regarding the Alert we set up earlier happen to occur within our Sensor.
 
+#### 8.1.- Connecting Tines and Slack
 
+So to connect Slack and Tines we need to go to Slack and on the left side panel click on the three dots **---** and then select "Automations".
 
+![image](https://github.com/user-attachments/assets/8ab5ca3f-3696-4eb9-abc0-423fdcdf6417)
+Image #37
 
+Once inside we are going to move to _**Apps**_ and search for Tines and then click "Add".
 
+![image](https://github.com/user-attachments/assets/34bcbad7-88aa-4af2-a6ff-2530ce3ecb5a)
+Image #38
 
+This will take us to another window with the information to add Tines to Slack. It will give us an "Authentication guide" to install Tines.
+
+![image](https://github.com/user-attachments/assets/deb10da6-7e11-494c-a095-cba2da3fd991)
+Image #39
+
+At the end of the installation you should have something like this in Tines.
+
+![image](https://github.com/user-attachments/assets/254551ef-f23c-4196-bc25-b792466c5e6d)
+Image #40
+
+Now that we have the correct credentials in Tines, we can go back to our Playbook. To add Slack as a template to our playbook we can click "Templates" in the left side panel and search for **Slack** and then drag it to the center.
+
+![image](https://github.com/user-attachments/assets/473637b1-8da6-4c30-976a-fb7ccb1d9cd8)
+Image #41
+
+Since we want Tines to send a message to Slack we need to select a template that will allow us to do just that. So to search por a template we need to click on the Slack item we just added to our playbook and on the right side panel search por "message".
+
+![image](https://github.com/user-attachments/assets/6e2c17e8-5479-4b80-baeb-b0d89b7d30ae)
+Image #42
+
+Reading through the description of the template we just created, it says that it need the permission to _chat:write_ of the channel we are going to send the messages to. Every channel in Slack has a Channel ID which will serve to give permission to write in said channel. To find the Channel ID of a channel in Slack we can go to the list of channel of the organization we are in and then right click the channel and select "View channel details", the Channel ID should be at the bottom of the new window. Once we've find that ID we need to copy it.
+
+![image](https://github.com/user-attachments/assets/448f9a28-a663-4aa4-a5ea-b8439019a85a)
+Image #43
+
+The ID we just copied it needs to be paste in Tines within the Slack template we created.
+
+![image](https://github.com/user-attachments/assets/8f02f3c4-ba72-44f9-a1a1-ed6747be69e0)
+Image #44
+
+Now what we want to do is connect the Webhook and the Slack template. To do that we can hover the Webhook item and a little arrow pointing down should appear under the icon. To connect them together we can just click in the arrow and drag the line to the Slack template.
+
+![image](https://github.com/user-attachments/assets/3fdfb5c9-2ec8-407a-bb98-4facbe08d4d0)
+Image #45
+
+To verify if there is connection between Tines and Slack we can click on the Slack template in Tines and select _Run_, this will send a default message to the channel "alerts" in Slack.
+
+![image](https://github.com/user-attachments/assets/8b30dc22-59e5-4732-a1de-58ff52484f48)
+Image #46
+
+![image](https://github.com/user-attachments/assets/ae2a806b-299a-4540-8a4d-5fc0e6921c7b)
+Image #47
+
+With that we have the first part of the diagram completed.
+
+#### 8.2.- Sending an Email through Tines
+
+To send an email from Tines we can add the Tool _Send Email_ from the left side panel and drag it to the our playbook. Once done that we need to connect it to the Webhook the same way we did with the Slack template. 
+
+![image](https://github.com/user-attachments/assets/fc44a2ac-968a-4fac-b80c-2fd24a416e73)
+Image #48
+
+If we click the "Send Email" item in our playbook, a panel on the right side of the window will appear, here we can select to which email we want the alert to be sent and also if we want to modify the name of the sender, so that we can now from where does the email come and finally we can select the Subject of said email, we will modify that later.
+
+We can test if it works by clicking on the item for "Send Email", then selecting "Test" and in the window of test we can just choose any event.
+
+![image](https://github.com/user-attachments/assets/c90b7809-8372-43f9-8ddb-8d83056579e4)
+Image #49
+
+Once selected an event and press "Test" and email should be send to the email we select it. By default it will send an email of the account we are logged in. Here is the example email we should have received. 
+
+![image](https://github.com/user-attachments/assets/30d9b164-38dd-41dd-90a3-6d7c01ca28df)
+Image #50
 
 
 
