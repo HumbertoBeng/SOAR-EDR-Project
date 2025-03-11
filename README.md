@@ -494,7 +494,158 @@ Once selected an event and press "Test" and email should be send to the email we
 ![image](https://github.com/user-attachments/assets/30d9b164-38dd-41dd-90a3-6d7c01ca28df)
 Image #50
 
+#### 8.3.- Creating a prompt for a user
 
+Now that we have done and test connectivity between Tines and Slack and verified if the Emails are being sent, we can go ahead and start with the user prompt.
+
+To start creating a prompt we are going to need a "Page" so that we can edit what is going to be sent in the prompt. We can find the "Page" item in the left side panel of Tinesm, inside the _Tools +_ option. Then drag it to our playbook.
+
+![image](https://github.com/user-attachments/assets/1273306e-cf82-4430-b075-388f1e25d48f)
+Image #51
+
+We will name this item "User Prompt" for the sake of practicality. To do that we can click the new "Page" item in our playbook and in the right side panel should be the option to rename it. We are also going to add a description to this item. Scrolling down the properties of this item, there should be an option called "Success message", this will allow us to input a message that we would like to be displayed after completing the prompt.
+
+![image](https://github.com/user-attachments/assets/a563bb9e-a2d2-4625-ae25-56c6b6d3dacd)
+Image #52
+
+![image](https://github.com/user-attachments/assets/b0c3e36c-e7a0-4ed0-81dc-82bed56a924e)
+Image #53
+
+Before we start creating our prompt, we need to know what is going to be the information we are going to display when sending an user prompt. Earlier we decided that we were going to include certain information when prompting the user if it wanted to isolate or not the machine. Image #1
+
+That information can be found on our webhook inside the "Event" option. Here we can find again which one of the alerts sent is the one we created so that we can copy the information that is there. For the user prompt to display exactly the information we want from the detection instead of giving out all the information that might not be useful, we can use the little copy button that appear when you hover a tag. 
+
+![image](https://github.com/user-attachments/assets/af7f3400-a11f-4f93-b801-3c36bf7fb992)
+Image #54
+
+This will copy the format of the information from the tag "COMMAND_LINE" and display only that. We can do exactly that with the rest of the information we want to be displayed. Finally this are the tags we are going to be using for the Slack message, the Email and the user prompt. You can see to which tag belongs each path by looking at the end of it. _**Note:**_ cat is the title of the Alert, everything else is as written.
+
+ ```
+<<webhook_action.body.cat>>
+<<webhook_action.body.routing.event_time>>
+<<webhook_action.body.routing.hostname>>
+<<webhook_action.body.routing.int_ip>>
+<<webhook_action.body.detect.event.PARENT.USER_NAME>>
+<<webhook_action.body.detect.event.FILE_PATH>>
+<<webhook_action.body.detect.event.COMMAND_LINE>>
+<<webhook_action.body.routing.sid>>
+<<webhook_action.body.link>>
+ ```
+
+To see this in action, we can go ahead and click the "Slack" template in our playbook, then scroll down until we see the option for "Message" and paste the information from above in that box. Then to see it in Slack without the need to generate more events we can use an option called "Test" when clicking in the "Slack" template. There we can select any of the events saved there and then click Test.
+
+![image](https://github.com/user-attachments/assets/c21eacfb-7cfe-4ffb-95d9-83586eeed933)
+Image #55
+
+As you can see, we no longer receive the text "Hello, World!" but the information contained in the tags we added in the "Message" option. Now that we have verified that it works, we should edit it so it can be more readable and user friendly.
+
+![image](https://github.com/user-attachments/assets/2d0f2e7f-5b96-4d71-83e1-2f90c553d2db)
+Image #56
+
+ ```
+Title: <<webhook_action.body.cat>>
+Time: <<webhook_action.body.routing.event_time>>
+Hostname: <<webhook_action.body.routing.hostname>>
+Ip: <<webhook_action.body.routing.int_ip>>
+Username: <<webhook_action.body.detect.event.PARENT.USER_NAME>>
+File Path: <<webhook_action.body.detect.event.FILE_PATH>>
+Command Line: <<webhook_action.body.detect.event.COMMAND_LINE>>
+Sensor ID: <<webhook_action.body.routing.sid>>
+Detection Link: <<webhook_action.body.link>>
+
+ ```
+
+Now that we have edited the message that will be send to Slack, we can go ahead and edit the message to be sent to Email. Since the "Send Email" item works differently by using HTML we can still copy and paste the format from above but lets just add a little tag from HTML so that we can create spaces between each line. 
+
+ ```
+Title: <<webhook_action.body.cat>> <br>
+Time: <<webhook_action.body.routing.event_time>><br>
+Hostname: <<webhook_action.body.routing.hostname>><br>
+Ip: <<webhook_action.body.routing.int_ip>><br>
+Username: <<webhook_action.body.detect.event.PARENT.USER_NAME>><br>
+File Path: <<webhook_action.body.detect.event.FILE_PATH>><br>
+Command Line: <<webhook_action.body.detect.event.COMMAND_LINE>><br>
+Sensor ID: <<webhook_action.body.routing.sid>><br><br>
+Detection Link: <<webhook_action.body.link>>
+ ```
+
+We can verify if it worked by doing the same as before and using the option "Test" within the "Send Email" item.
+
+![image](https://github.com/user-attachments/assets/6ddb0b74-a303-459b-9d4d-af4d7bda6803)
+Image #57
+
+Now we want to edit our user prompt for it to display the same message, since this item doesn't use HTML like the email item, we can just use the same syntaxis as from the Slack message. To do that we can double click the "User prompt" item, this will take us to an editor of sorts so that we can modify the prompt that will be sent once a dections comes from LimaCharlie. Also since this will be a user prompt with a Yes/No question, we can add an item called Boolean that can be found in the left side panel by scrolling down. To add it just drag it to the center of the page and it should be fine.
+
+![image](https://github.com/user-attachments/assets/e81fa011-6571-4acf-a2c5-333b82acf8f5)
+Image #58
+
+Now to test and see what does our prompt looks like, we can go back to our playbook, click the "User Prompt" item and select the little arrow pointing upwards. Then select an event for it to take the data.
+
+![image](https://github.com/user-attachments/assets/8523f093-4796-4fbc-b42e-3058d1336b57)
+Image #59
+
+![image](https://github.com/user-attachments/assets/30ebaaf1-8b97-4a3b-b4a2-1d866a058565)
+Image #60
+
+
+Next is to create the Yes/No response for the User Prompt. to start we can drag the "Trigger" item from the panel in the left side and lets rename it to "No" and connect it to the "User Prompt" item.
+To make it so that the Trigger is activated when the User Prompt response is "No" we need to add a rule for it to detect it. To do that we can click on the Trigger item and in the right side panel we should see an option for "Rules". So to write a rule we can hover on the first text box and a little **+** sign should appear.
+
+![image](https://github.com/user-attachments/assets/8ac381bb-6a87-40f4-9a23-ffa6957c7047)
+Image #61
+
+To start writing the rule we can click on that **+** sign and then click on _value_. First we can see that there is the section fro "Data", that means that it can either take the results from the webhook or the user_prompt, we want it to take the information from the later so we will select that. We want to select it twice, we do that so that we can continue adding more values to the rule. _**Note:**_ in case that you don't see "user_prompt" as one of the data sources, then you should check if you connected the user prompt to the Trigger item.
+
+![image](https://github.com/user-attachments/assets/3779883c-04a2-4006-a823-ec4084e80b0a)
+Image #62
+
+Then it will give us an option to retrieve data from the body or the headers of the event. Since the information we want is within the body, we will select that.
+
+![image](https://github.com/user-attachments/assets/2eacde62-2bcc-4dfc-b816-213dddd016a3)
+Image #63
+
+Finally to finish the rule we want to select the one called Isolate. This may vary depending on what name you used to name the "Boolean" item we added in our user prompt. _**Note:**_ to make sure we will receive the information we want, in the bottom right corner of the rule menu there is a "Result:" tag that will show what information is going to return, so just make sure that the information that is going to be returned is "false".
+
+![image](https://github.com/user-attachments/assets/e6cec372-e0cc-44e6-98a3-6fd1995f16ea)
+Image #64
+
+Once we've created our rule, in the text box under the rule, we are going to set it to "is equal to" and the one under that set it to "false".
+
+And this is what should happen once we've finished with the ruleset. Everytime we select "No" in the user promopt it should send a message to slack.
+
+![image](https://github.com/user-attachments/assets/913a69b3-afec-4ec8-af1e-d4cd10710b2e)
+Image #65
+
+
+Now for the event a user were to select "Yes" we can just copy and paste the "Trigger" item we just created and change its name to _Yes_ and change the last value of "false" to "true".
+
+![image](https://github.com/user-attachments/assets/3616c78b-8e30-40eb-8236-5424ca0dc951)
+Image #66
+
+Next we need to add a LimaCharlie template for Tines to be able to isolate the machine. Same as with the "Slack" template we can search for a LimaCharlie template and drag it to our playbook.
+
+![image](https://github.com/user-attachments/assets/2ec5cae0-3263-4858-92db-4bc7168edbb3)
+Image #67
+
+We want this template to isolate a machine so we should search for one that does that.
+
+![image](https://github.com/user-attachments/assets/2092d82a-38bc-4e7d-8b17-289f523a7c74)
+Image #68
+
+Looking at the list there are 2 template that do similar things, this time we'll be using the first one. Isolate Sensor.
+
+![image](https://github.com/user-attachments/assets/7a07506b-f23c-403d-b776-1f76be5ef4ed)
+Image #69
+
+Looking at the URL, the tag that is looking for to isolate a machine is _sid_ but as we have seen before, the tag that contains that information is not called _sid_ so we will need to replace it.
+
+![image](https://github.com/user-attachments/assets/fd6a4401-9ad2-4d16-a07e-36ac08097b41)
+Image #70
+
+For this item to work and isolate the machine in LimaCharlie, we will need to give it credentials for it to do so. To add credentials we can open another tab in the Dashboard of Tines and click on the top left corner on "Personal" and look for "Credentials". Once inside we are going to add a new credential for LimaCharlie. Since there isn't a specific credential for LimaCharlie we are going to need to use an "HTTP Request" form to retrieve the credentials from LimaCharlie. So to obtain the credential keys from LimaCharlie we can go to the main page of our organization, search for a tab called "Access Management" and then "REST API". The key we are going to need is called "Org JWT", since in the documentation for LimaCharlie recommends for us to use the organization API key since any other key will be rather powerful and difficult to manage.
+
+![image](https://github.com/user-attachments/assets/e11a4781-0728-4dff-a38f-01ab1d241832)
+Image #71
 
 
 
