@@ -642,10 +642,42 @@ Looking at the URL, the tag that is looking for to isolate a machine is _sid_ bu
 ![image](https://github.com/user-attachments/assets/fd6a4401-9ad2-4d16-a07e-36ac08097b41)
 Image #70
 
-For this item to work and isolate the machine in LimaCharlie, we will need to give it credentials for it to do so. To add credentials we can open another tab in the Dashboard of Tines and click on the top left corner on "Personal" and look for "Credentials". Once inside we are going to add a new credential for LimaCharlie. Since there isn't a specific credential for LimaCharlie we are going to need to use an "HTTP Request" form to retrieve the credentials from LimaCharlie. So to obtain the credential keys from LimaCharlie we can go to the main page of our organization, search for a tab called "Access Management" and then "REST API". The key we are going to need is called "Org JWT", since in the documentation for LimaCharlie recommends for us to use the organization API key since any other key will be rather powerful and difficult to manage.
+For this item to work and isolate the machine in LimaCharlie, we will need to give it credentials for it to do so. To add credentials we can open another tab in the Dashboard of Tines and click on the top left corner on "Personal" and look for "Credentials". Once inside we are going to add a new credential for LimaCharlie. Since there isn't a specific credential for LimaCharlie we are going to need to use an "text" form to retrieve the credentials from LimaCharlie. So to obtain the credential keys from LimaCharlie we can go to the main page of our organization, search for a tab called "Access Management" and then "REST API". The key we are going to need is called "Org JWT", since in the documentation for LimaCharlie recommends for us to use the organization API key since any other key will be rather powerful and difficult to manage.
 
 ![image](https://github.com/user-attachments/assets/e11a4781-0728-4dff-a38f-01ab1d241832)
 Image #71
+
+Now that we have obtained the credentials for the organization, we can go ahead and add them to Tines. Again in the credentials menu of Tines we can go ahead and add a "text" form, as the name we can give it the name of "LimaCharlie", a description, as the value we can paste the key we copied earlier and for the Domain we can type "*.limacharlie.io" and finally click on _Save_.
+
+![image](https://github.com/user-attachments/assets/1be18bfd-aa43-4143-8d87-450947fb8742)
+Image #72
+
+After adding the credentials for LimaCharlie we can go back to our playbook, click in an empty space to open the right side panel and search for credential and connect to LimaCharlie.
+
+![image](https://github.com/user-attachments/assets/ee2d8889-85df-4710-9fcf-02439f7c7d52)
+Image #73
+
+Before we try to isolate our machine using Tines, we can check what does the status show when the machine is connected. 
+
+![image](https://github.com/user-attachments/assets/30869f60-05bc-47c1-ae5b-e673fdd37a76)
+Image #74
+
+Now that we know how it looks, we can go ahead and run the playbook but this time instead of selecting "No" as our response, we will select "Yes".
+After clicking "Yes" in the user prompt, we can go back and see if there have been any changes.
+
+![image](https://github.com/user-attachments/assets/370d4dd5-2a36-4706-a3b3-d48778ba929d)
+Image #75
+
+As we can see it worked!. We have isolated a machine using Tines going through a user prompt.
+
+
+
+
+
+
+
+
+
 
 
 
