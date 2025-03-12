@@ -346,9 +346,9 @@ Image #23
 
 As we can see in the feed of alerts there is our newly created Detection & Response Rule working.
 
-### Step 5.- Setup Slack
+### Step 5.- Setting up Slack
 
-First things first we need to create an account with Slack.
+First thing we need to do is to create or log in to Slack.
 
 Once you have created an account with Slack go ahead and click the "Create a workspace" button. Next write a name for your Organization, then write the name you would like to be recognized with. We won't be adding more people to this company since is not necessary at the moment so we can skip that option. And finally give a description to your Organization, it can be anythinng.
 
@@ -357,7 +357,7 @@ Now we are going to create a new channel where all the alerts are going to be se
 ![image](https://github.com/user-attachments/assets/1bb61608-6d69-4d99-9336-e61c4fb5cb44)
 Image #25
 
-To show that this channel will be the one receiving the alerts from Tines, let's name give it the name of "alerts" and setting it up its visibility to Public, and at the end just click create.
+To show that this channel will be the one receiving the alerts from Tines, let's give it the name of "alerts" and setting its visibility to Public, and at the end just click create.
 
 ![image](https://github.com/user-attachments/assets/379157e8-04e3-4d28-bc00-81e471dec1f3)
 Image #26
@@ -366,7 +366,7 @@ The channel now created should be at the top of the list of "Channels".
 
 
 
-### Step 6.- Setup Tines
+### Step 6.- Setting up Tines
 
 Same as before we are going to create an account to use with Tines.
 
