@@ -1,13 +1,13 @@
 # SOAR EDR Project
 
 ## Objective
-The objective of this project is to simulate an attack on a virtual machine and track the incident via an Endpoint Detection and Response (EDR) tool. Then we'll create a customised Detection & Response Rule to alert about the malicious behaviour in our target machine. The target machine that will be used in this project is a windows server 2022 ran in a virtual machine using virtual box. Following that, we will create a Playbook/Story to handle the response to the alert. This Playbook/Story will be created to notify via Slack and email about the incident, and will also prompt the user to select whether to isolate or not the compromised machine.
+The objective of this project is to simulate an attack on a virtual machine and track the incident via an Endpoint Detection and Response (EDR) tool. Then we'll create a customised Detection & Response Rule to alert about the malicious behaviour in our machine. The machine that will be used in this project is a windows server 2022 ran in a virtual machine using virtual box. Following that, we will create a Playbook/Story to handle the response to the alert. This Playbook/Story will be created to notify via Slack and email about the incident, and will also prompt the user to select whether to isolate or not the compromised machine.
 
 ## Skills Learned
 
-- Creation of a diagram to explain the workflow.
+- Creation of a diagram to explain workflow.
 - Ability to create Detect & Response rules.
-- Enhanced knowledge on SOAR and EDR tools.
+- Basic knowledge on SOAR and EDR tools.
 - Creation of playbooks/stories.
 - Virtual Machines.
 
@@ -27,7 +27,8 @@ The first thing to do is describe what we wanted out of this project.
 - Create a Playbook/Story using Tines.
 - Create detection in LimaCharlie that would Detect the use of a HackTool (LaZagne), which then would be send to Tines, and finally sent a message to Slack & also an Email.
  
-The slack message and the Email will contain:
+The slack message and the Email should contain:
+- Name of the Alert
 - Time
 - Computer Name
 - Source IP
@@ -52,28 +53,29 @@ The alert in Tines would then Prompt the User to isolate the machine and ask (Ye
 
 To start Installing LimaCharlie we are going to need to log in or create an account in <a href=https://limacharlie.io/>limacharlie.io</a>  in case you don't have one.
 
-Once you've logged in we will be presented with a small guide to the concepts used in LimaCharlie, in this screen we will create an **Organization**.
+Once you've logged in we will be presented with a small guide to the concepts used in LimaCharlie. In this screen we will create an **Organization**.
 
 ![image](https://github.com/user-attachments/assets/ee16c494-c25f-40d3-aae5-75de4b377f43)
 Image #2.
 
-After clicking the button "Create Organization", we will be presented with a new window where we will name our Organization and select the Region closest to our location. The we can leave the template option as it is. Finally we click "Create Organization".
+After clicking the button "Create Organization", we will be presented with a new window where we will name our Organization and select the Region closest to our location. Then we can leave the template option as it is. Finally we click "Create Organization".
 
 ![image](https://github.com/user-attachments/assets/2f4b690f-33f5-46c5-97f8-eed29c13e933)
 Image #3
 
 Now that we have created an organization we will need to go to the **Sensors** tab and then go to **Installation Keys** where we will create a key so that we can start adding machines to our Organization.
-To create an Installation Key we are going to click the button "Create Installation Key" and give it a name. We are given the option to give it tags so that we can recognize the devices related to this key, but for the sake of this project we will not be doing that. _**Note:**_ We can delete the rest of the keys so that it looks cleaner once we start adding machines.
+
+To create an Installation Key we are going to click the button "Create Installation Key" and give it a name. We are given the option to give it tags so that we can recognize the devices related to this key, but for the sake of this project we will not be doing that. _**Note:**_ We can delete the rest of the keys so that it looks cleaner once we start adding more machines.
 
 ![image](https://github.com/user-attachments/assets/5089cb84-e84e-4d0b-b5e0-f8a4cd314d64)
 Image #4
 
- After we've created our Installation Key we can scroll down to the "Sensor Downloads" section. Here we can download the installation file to start adding machines to our organization. Since in this project our target machine we will be using is a Windows Server, we can go ahead and download the EDR Windows 54 bit file. _**Note:**_ Make sure you download this file using the Windows Server virtual machine so that you don't need to open a path between your main machine and the virtual machine.
+ After we've created our Installation Key we can scroll down to the "Sensor Downloads" section. Here we can download the installation file to start adding machines to our organization. Since in this project the machine we will be using is a Windows Server, we can go ahead and download the EDR Windows 64 bit file. _**Note:**_ Make sure you download this file using the machine you want to add to the Organization so that you don't need to open a path between your main machine and the virtual machine.
 
 ![image](https://github.com/user-attachments/assets/98f4c7b3-db14-43a1-8a32-11b03a2da78b)
 Image #5
 
-While the file is downloading, we can go ahead and copy the "Sensor Key" of the key we just created since it will be needed for the installation.
+While the file is downloading, we can go ahead and copy the "Sensor Key" of the key we just created since it will be needed for the installation as shown in the image.
 
 ![image](https://github.com/user-attachments/assets/353a2cda-63e4-4b29-8af4-a5d3ec91b8a8)
 Image #6
