@@ -160,7 +160,7 @@ Image #17
 
 The result gave us 100+ rules that contained the "Credential" keyword, so to narrow down the search for a rule that will be the most useful one, we can check what other kind of information de event generated gave us. In this case, the event generated when executing LaZagne was a _NEW_PROCESS_ event, so lets search for a rule that contains something related to creation of processes.
 
-Going further down we can see a "windws_process_creation", this rule could be of use for us.
+Going further down we can see a "windows_process_creation", this rule could be of use for us.
 
 ![image](https://github.com/user-attachments/assets/61b7456e-6018-497d-a3b4-38460a9e7b47)
 Image #18
@@ -168,7 +168,8 @@ Image #18
 To see the contents of the rule we can go ahead and click it and then head to the github repository so that we can copy it and make use of it for our new rule.
 
 
-Now that we have the rule we can go back to the rule we created at the start which should be all the way to the top of the list. To edit the rule we can click the pencil beside it.
+Now that we have the rule we can go back to the rule we created at the start which should be all the way to the top of the list. 
+To edit the rule we can click the pencil beside it.
 
 ![image](https://github.com/user-attachments/assets/7e1c5713-ce61-401e-b576-fadc096452ac)
 Image #19
@@ -200,19 +201,19 @@ detect:
         path: event/FILE_PATH
         value: \reg.exe
  ```
-Starting with the tag _events:_, it contains _NEW_PROCESS_ and _EXISTING_PROCESS_ as values. This values are taken from the _Event Collection_ tab within the tabs our machine in LimaCharlie. Which means that this detection will only trigger if the event is under the _NEW_PROCESS_ or _EXISTING_PROCESS_ values.
+Starting with the tag _**events:**_, it contains _NEW_PROCESS_ and _EXISTING_PROCESS_ as values. This values are taken from the _Event Collection_ tab within our machine in LimaCharlie. Which means that this detection will only trigger if the event is under the _NEW_PROCESS_ or _EXISTING_PROCESS_ values.
 
 ![image](https://github.com/user-attachments/assets/60614cc2-4991-4040-8de9-9e4dd8985bfa)
 Image #20
 
-The next tag is _op:_ which is short for Operator, with the value of *and*. We can get a list of operators within the rule creation window to the right. As you can see each operator is highlighted, if you click in any of them it will take you to the documentation for that specific operator. So in short, the _op: and_ tag does is that the event must include the above mention values of _NEW_PROCESS_ or _EXISTING_PROCESS_ *and* a set of _rules_ which will be written next for the detection to trigger.
+The next tag is _**op:**_ which is short for Operator, with the value of *and*. We can get a list of operators within the rule creation window in the right side of the page. As you can see each operator is highlighted, if you click in any of them it will take you to the documentation for that specific operator. So in short, the _**op: and**_ tag does is that the event must include the above mention values of _NEW_PROCESS_ or _EXISTING_PROCESS_ *and* a set of _rules_ which will be written next for the detection to trigger.
 
 ![image](https://github.com/user-attachments/assets/9c839036-85c6-4737-83c1-67de9bda3817)
 Image #21
 
-Then the _rules:_ tag is the criteria the event must follow for the detection to trigger. Using the example above we can see that is using the _op_ again, but this time is using _is_ as a value and then adding the keyword _windows_, which means that one of the conditions for this detection is that the OS of the machine must be windows. 
+Then the _**rules:**_ tag is the criteria the event must follow for the detection to trigger. Using the example above we can see that is using the _op_ again, but this time is using _is_ as a value and then adding the keyword _windows_, which means that one of the conditions for this detection is that the OS of the machine must be windows. 
 
-Going down a bit we can see there is another tag of _rules:_ with the tag _case sensitive: false_ which is kind of self-explanatory. Now the next tag is once more an operator tag _op:_ now with the value of _ends with_ and the tag _path: event/FILE_PATH_. The tag _op: ends with_ is telling that the path is required to end with the same value that the tag _path:_ has. and finally the value tag _value: \reg.exe_ is what should replace the FILE_PATH within the tag _path: event/FILE_PATH_ for it to trigger the alert. we can exchange the _FILE_PATH_ value from the tag _path: event/FILE_PATH_ with any other value that contains the event, for example the "HASH" value. refer to image #15.
+Going down a bit we can see there is another tag of _rules:_ with the tag _case sensitive: false_ which is kind of self-explanatory. Now the next tag is once more an operator tag _op:_ now with the value of _ends with_ and the tag _path: event/FILE_PATH_. The tag _op: ends with_ is telling that the path is required to end with the same value that the tag _path:_ has. Finally the value tag _value: \reg.exe_ is what should replace the FILE_PATH within the tag _path: event/FILE_PATH_ for it to trigger the alert. we can exchange the _FILE_PATH_ value from the tag _path: event/FILE_PATH_ with any other value that contains the event, for example the "HASH" value. refer to image #15.
 
 In summary what this Detection does is to detect if a new event has the values of NEW_PROCESS or EXISTING_PROCESS, then verify if the OS of the machine/sensor is indeed windows. Once validated both values it will only trigger if the path of the event generated ends with \reg.exe ignoring case sensitivity. 
 
@@ -273,7 +274,9 @@ detect:
         value: \reg.exe
  ```
 
-This rule aligns in part with what we want. we know that the event generated by the tool recognizes what tool is being used and the path where the tool is saved. So to start detecting that we can just replace the tag _value: \reg.exe_ with the value of _lazagne.exe_. 
+This rule aligns in part with what we want. we know that the event generated by the tool recognizes what tool is being used and the path where the tool is saved. 
+
+So to start detecting that we can just replace the tag _value: \reg.exe_ with the value of _lazagne.exe_. 
 
 Moving forward, we know that a tool can have different uses, which means that it can be also used with tags for different functionalities, so we need to account for that when writing our new rule. So to make up for that we can add a new section of rules. Also to make our rule more thorough we can add a new rule that accounts for the HASH of the file.
 
@@ -341,7 +344,7 @@ To try it out, we can head to the _**Detections**_ tab and execute the file once
 ![image](https://github.com/user-attachments/assets/3dd40bf9-f2ed-4c9e-9cf5-e2588352e875)
 Image #23
 
-As we can see in the feed we of alerts there is our newly created Detection & Response Rule working fine.
+As we can see in the feed of alerts there is our newly created Detection & Response Rule working.
 
 ### Step 5.- Setup Slack
 
